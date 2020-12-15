@@ -1,0 +1,149 @@
+<html>
+
+<head>
+
+    <style>
+        /* Parallax base styles
+  --------------------------------------------- */
+
+        .parallax {
+            height: 500px;
+            /* fallback for older browsers */
+            height: 100vh;
+            overflow-x: hidden;
+            overflow-y: auto;
+            -webkit-perspective: 300px;
+            perspective: 300px;
+            -webkit-perspective-origin-x: 100%;
+            perspective-origin-x: 100%;
+        }
+
+        .parallax__group {
+            position: relative;
+            height: 500px;
+            /* fallback for older browsers */
+            height: 100vh;
+            -webkit-transform-style: preserve-3d;
+            transform-style: preserve-3d;
+        }
+
+        .parallax__layer {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            -webkit-transform-origin-x: 100%;
+            transform-origin-x: 100%;
+        }
+
+        .parallax__layer--fore {
+            -webkit-transform: translateZ(90px) scale(.7);
+            transform: translateZ(90px) scale(.7);
+            z-index: 1;
+        }
+
+        .parallax__layer--base {
+            -webkit-transform: translateZ(0);
+            transform: translateZ(0);
+            z-index: 4;
+        }
+
+        .parallax__layer--back {
+            height: 100%;
+            -webkit-transform: translateZ(-300px) scale(2);
+            transform: translateZ(-300px) scale(2);
+            z-index: 3;
+            background-image: url(shapes.svg) !important;
+            background: repeat;
+        }
+
+        .parallax__layer--deep {
+            -webkit-transform: translateZ(-600px) scale(3);
+            transform: translateZ(-600px) scale(3);
+            z-index: 2;
+
+
+            background-image: url(borders.svg) !important;
+
+
+        }
+
+
+
+
+
+        #group4 {
+            z-index: 2;
+            /* slide under group 3 and 5 */
+        }
+
+        #group4 .parallax__layer--deep {
+            background: rgb(155, 155, 155);
+        }
+
+
+        /* misc
+  --------------------------------------------- */
+
+
+        .filter-row {
+            padding-top: 500px;
+            padding-bottom: 500px;
+            position: relative;
+        }
+
+        .filter-row:after {
+            position: absolute;
+            content: '';
+            display: block;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 100%;
+
+
+
+            mix-blend-mode: color;
+        }
+
+
+
+        .red-filter:after {
+            background: rgba(255, 0, 0, .5);
+        }
+
+        .blue-filter:after {
+            background: rgba(0, 255, 0, .5);
+        }
+
+        .green-filter:after {
+            background: rgba(0, 0, 255, .5);
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <div class="parallax">
+
+        <div id="group4" class="parallax__group">
+            <div class="parallax__layer parallax__layer--base">
+                <div class="filter-row red-filter">Filter 1</div>
+                <div class="filter-row blue-filter">Filter 2</div>
+                <div class="filter-row green-filter">Filter 3</div>
+            </div>
+
+            <div class="parallax__layer parallax__layer--back">
+
+            </div>
+            <div class="parallax__layer parallax__layer--deep">
+
+            </div>
+        </div>
+
+    </div>
+</body>
+
+</html>
