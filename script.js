@@ -1,0 +1,75 @@
+var html = document.documentElement;
+var body = document.body;
+
+function attachSlowScroll(target, speed = 0.05) {
+  var scroller = {
+    target: target,
+    ease: speed, // <= scroll speed
+    endY: 0,
+    y: 0,
+    resizeRequest: 1,
+    scrollRequest: 0,
+  };
+  
+  var requestId = null;
+  
+  TweenLite.set(scroller.target, {
+    rotation: 0.01,
+    force3D: true
+  });
+
+  updateScroller();  
+  window.focus();
+  window.addEventListener("resize", onResize);
+  document.addEventListener("scroll", onScroll); 
+
+  function updateScroller() {
+  
+    var resized = scroller.resizeRequest > 0;
+  
+    if (resized) {    
+      var height = scroller.target.clientHeight;
+      body.style.height = height + "px";
+      scroller.resizeRequest = 0;
+    }
+  
+    var scrollY = window.pageYOffset || html.scrollTop || body.scrollTop || 0;
+  
+    scroller.endY = scrollY;
+    scroller.y += (scrollY - scroller.y) * scroller.ease;
+  
+    if (Math.abs(scrollY - scroller.y) < 0.05 || resized) {
+      scroller.y = scrollY;
+      scroller.scrollRequest = 0;
+    }
+  
+    TweenLite.set(scroller.target, { 
+      y: -scroller.y 
+    });
+  
+    requestId = scroller.scrollRequest > 0 ? requestAnimationFrame(updateScroller) : null;
+  }
+  
+  function onScroll() {
+    scroller.scrollRequest++;
+    if (!requestId) {
+      requestId = requestAnimationFrame(updateScroller);
+    }
+  }
+  
+  function onResize() {
+    scroller.resizeRequest++;
+    if (!requestId) {
+      requestId = requestAnimationFrame(updateScroller);
+    }
+  }
+}
+
+window.addEventListener("load", onLoad);
+
+function onLoad() {
+  document.querySelectorAll(".slow-scroller").forEach(function (target) {
+    var speed = target.getAttribute('data-speed') || 0.05
+    attachSlowScroll(target, speed)
+  })
+}

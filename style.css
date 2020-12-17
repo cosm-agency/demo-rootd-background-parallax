@@ -1,0 +1,37 @@
+body {
+  padding: 0;
+  background-color: #0d1d2a;
+}
+.solid-bg {
+  height:400vh;
+  background-image: url('assets/shapes.svg');
+  background-size: cover;
+  transform: perspective(200px) translateZ(-100px) scale(1.5);
+}
+.line-bg {
+  height:400vh;
+  background-image: url('assets/borders.svg');
+  background-size: cover;
+  transform: perspective(200px) translateZ(-200px) scale(2);
+}
+
+.background-scroll {
+  z-index: -1;
+  overflow: hidden;
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.slow-scroller {  
+  position: absolute;  
+  overflow: hidden;
+  z-index: 1;
+  backface-visibility: hidden;
+  transform-style: preserve-3d;
+  width: 100%;
+}
